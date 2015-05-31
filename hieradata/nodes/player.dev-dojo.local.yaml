@@ -1,0 +1,12 @@
+---
+classes:
+  - puppetdb
+  - puppetdb::master::config
+  - mysql::server
+  - icinga::profile
+
+postgresql::server::listen_addresses: '*'
+postgresql::server::postgres_password: 'gargamel007'
+
+mysql::params::root_password: 'gargamel007'
+mysql::params::create_root_user: true
