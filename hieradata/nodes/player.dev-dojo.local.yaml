@@ -5,6 +5,8 @@ classes:
   - mysql::server
   - profiles::mysql
   - icinga2::server
+  - icingaweb2
+  - icinga::profile
 
 postgresql::server::listen_addresses: '*'
 postgresql::server::postgres_password: 'gargamel007'
@@ -34,3 +36,20 @@ icinga2::server::server_enabled_features: ['checker','notification', 'compatlog'
 icinga2::server::purge_unmanaged_object_files: false
 icinga2::server::install_mail_utils_package: true
 icinga2::server::server_install_nagios_plugins: true
+
+icingaweb2::install_method: 'package'
+icingaweb2::ido_type: 'mysql'
+icingaweb2::ido_db_user: 'icinga'
+icingaweb2::ido_db_pass: 'gargamel007'
+icingaweb2::ido_db_host: 'localhost'
+icingaweb2::ido_db_name: 'icinga_data'
+icingaweb2::ido_db_port: '3306'
+icingaweb2::web_db_name: 'icinga2_web'
+icingaweb2::web_db_host: 'localhost'
+icingaweb2::web_db_pass: 'gargamel007'
+icingaweb2::web_db_port: '3306'
+icingaweb2::web_db_user: 'icinga'
+icingaweb2::web_root: '/usr/share/icingaweb2/'
+icingaweb2::admin_permissions: '*'
+icingaweb2::adminusers: 'icingaadmin'
+icingaweb2::manage_apache_vhost: true
