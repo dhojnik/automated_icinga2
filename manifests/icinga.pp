@@ -1,26 +1,5 @@
 class icinga::profile {
 
-mysql::db { 'icinga2_data':
-  user     => 'icinga2',
-  password => 'gargamel007',
-  host     => 'localhost',
-  grant    => ['ALL'],
-}
-
-mysql::db { 'icinga2_web':
-  user     => 'icinga2',
-  password => 'gargamel007',
-  host     => 'localhost',
-  grant    => ['ALL'],
-}
-
-mysql::db { 'icinga2_ido':
-  user     => 'icinga2',
-  password => 'gargamel007',
-  host     => 'localhost',
-  grant    => ['ALL'],
-}
-
 class { 'apache':
   default_mods        => true,
   default_confd_files => true,
@@ -40,27 +19,6 @@ apache::custom_config { 'icingaweb2':
   content => template('icingaweb2/apache2.conf.erb'),
 }
 */
-
-class { 'icinga2::server':
-  server_db_type => 'mysql',
-  db_host => 'localhost',
-  db_port => '3306',
-  db_name => 'icinga2_data',
-  db_user => 'icinga2',
-  db_password => 'gargamel007',
-  server_enabled_features  => ['checker','notification', 'compatlog', 'graphite', 'mainlog', 'perfdata', 'command', 'syslog', 'ido-mysql', 'statusdata', 'livestatus'],
-}
-
-icinga2::object::idomysqlconnection { 'mysql_connection':
-   target_dir => '/etc/icinga2/features-enabled',
-   target_file_name => 'ido-mysql.conf',
-   host             => '127.0.0.1',
-   port             => '3306',
-   user             => 'icinga2',
-   password         => 'gargamel007',
-   database         => 'icinga2_data',
-   categories => ['DbCatConfig', 'DbCatState', 'DbCatAcknowledgement', 'DbCatComment', 'DbCatDowntime', 'DbCatEventHandler' ],
-}
 
 class { 'icingaweb2':
    install_method => 'package',

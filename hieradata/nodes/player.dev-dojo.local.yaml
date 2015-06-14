@@ -3,10 +3,34 @@ classes:
   - puppetdb
   - puppetdb::master::config
   - mysql::server
-  - icinga::profile
+  - profiles::mysql
+  - icinga2::server
 
 postgresql::server::listen_addresses: '*'
 postgresql::server::postgres_password: 'gargamel007'
 
-mysql::params::root_password: 'gargamel007'
-mysql::params::create_root_user: true
+mysql::server::root_password: 'strongpassword'
+
+databases:
+  icinga_web:
+    user: 'icinga'
+    password: 'gargamel007'
+    host: 'localhost'
+    grant: 'ALL'
+
+  icinga_data:
+    user: 'icinga'
+    password: 'gargamel007'
+    host: 'localhost'
+    grant: 'ALL'
+
+icinga2::server::manage_repos: false
+icinga2::server::use_debmon_repo: false
+icinga2::server::server_db_type: 'mysql'
+icinga2::server::db_name: 'icinga_data'
+icinga2::server::db_user: 'icinga'
+icinga2::server::db_password: 'gargamel007'
+icinga2::server::server_enabled_features: ['checker','notification', 'compatlog', 'graphite', 'mainlog', 'perfdata', 'command', 'syslog', 'ido-mysql', 'statusdata', 'livestatus']
+icinga2::server::purge_unmanaged_object_files: false
+icinga2::server::install_mail_utils_package: true
+icinga2::server::server_install_nagios_plugins: true
